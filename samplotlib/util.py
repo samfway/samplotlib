@@ -31,14 +31,15 @@ ACCENT_COLOR_1 = np.array([255., 145., 48.]) / 255.
 
 # Configuration
 #rcParams['text.usetex'] = True #Let TeX do the typsetting
-#rcParams['pdf.use14corefonts'] = True
-#rcParams['ps.useafm'] = True
+rcParams['pdf.use14corefonts'] = True
+rcParams['ps.useafm'] = True
 #rcParams['text.latex.preamble'] = [r'\usepackage{sansmath}', r'\sansmath'] #Force sans-serif math mode (for axes labels)
 rcParams['font.family'] = 'sans-serif' # ... for regular text
-rcParams['font.sans-serif'] = ['Helvetica Neue'] #, Avant Garde, Computer Modern Sans serif' # Choose a nice font here
+rcParams['font.sans-serif'] = ['Helvetica Neue', 'HelveticaNeue', 'Helvetica'] #, Avant Garde, Computer Modern Sans serif' # Choose a nice font here
 rcParams['pdf.fonttype'] = 42
 rcParams['ps.fonttype'] = 42
 rcParams['text.color'] = ALMOST_BLACK
+rcParams['axes.unicode_minus'] = False
 
 rcParams['xtick.major.pad'] = '8'
 rcParams['axes.edgecolor']  = ALMOST_BLACK
