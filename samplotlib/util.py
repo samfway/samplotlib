@@ -117,3 +117,31 @@ def finalize(ax, fontsize=LABEL_SIZE, labelpad=7):
     ax.xaxis.label.set_size(fontsize)
     ax.tick_params(axis='both', which='major', labelsize=fontsize, pad=labelpad)
 
+
+def lineswap_axis(fig, ax, zorder=-1000, lw=1, alpha=0.2, skip_zero=False):
+    """ Replace y-axis ticks with horizontal lines running through the background.
+        Sometimes this looks really cool. Worth having in the bag 'o tricks.
+    """
+    fig.canvas.draw()  # Populate the tick vals/labels. Required for get_[xy]ticklabel calls.
+    
+    ylabels = [str(t.get_text()) for t in ax.get_yticklabels()]
+    yticks = [t for t in ax.get_yticks()]
+    xlabels = [str(t.get_text()) for t in ax.get_xticklabels()]
+    xticks = [t for t in ax.get_xticks()]
+        
+    x_draw = [tick for label, tick in zip(ylabels, yticks) if label != '']  # Which ones are real, though?
+    y_draw = [tick for label, tick in zip(ylabels, yticks) if label != '']
+    
+    xmin = x_draw[0]
+    xmax = x_draw[-1]
+    
+    # Draw all the lines
+    for val in y_draw:
+        if val == 0 and skip_zero:
+            continue  # Don't draw over the bottom axis
+        ax.plot([xmin, xmax], [val, val], color=ALMOST_BLACK, zorder=zorder, lw=lw, alpha=alpha)
+    
+    ax.spines["left"].set_visible(False)  # Remove the spine
+    ax.tick_params(axis=u'y', which=u'both',length=0)  # Erase ticks by setting length=0
+    ax.set_xlim(xmin, xmax)  # Retain original xlims
+
